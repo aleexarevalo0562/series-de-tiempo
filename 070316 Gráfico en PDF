@@ -1,0 +1,9 @@
+Tasa<-c(3.4,4.8,3.3,5.6,3.2,2.9,1.9,2.8,6.0,4.3,2.2)
+desocupacion<-data.frame(Tasa)
+seriedetiemp<-ts(desocupacion)##de data frame a series de tiempo
+seriedetiemp
+pdf(file="tendencia y ST.pdf")##tipo de archivo a guardar
+layout(1:2)
+plot(seriedetiemp, xlab="trimestre de 2005-2007", ylab="tasa de desocupación", main="Tasa de desocupación")
+plot(aggregate(seriedetiemp))
+dev.off()##Cierra el archivo donde se crea la imagen, lo guarda en documentos(si es PDF) o imagenes
