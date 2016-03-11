@@ -1,0 +1,30 @@
+###1.simulación de series de tiempo####
+##vamos a simular 1 indicador###
+###para la simulaciíon en principio necesitamos alguna información
+
+###valor máximo, mínimo, el número de datos
+###en este ejemplo vamops a proponer la poblacion en maximo
+###que el valor minimo seran 1000, max 120, 15 datos que inicie en 2000
+pob<- sample(100:120,15, replace=F)
+###la convertimos en serie de tiempo
+pobts<- ts( pob, frequency=1, start=(2000))
+plot(pobts)##darle formato
+plot(aggregate (pobts))
+####bajar de inegi la base de datos.
+####importar CSV
+ocu<-ts(read.csv(("C:\\Users\\SALA-C3\\Desktop\\ocupa.csv"), header=F), frequency = 4, start=2005);
+plot (ocu)##darle formato
+plot (aggregate(ocu))##darle formato
+####ejercicio Simular la tasa de desocupación entre 3 a 8%,2005, 
+####40 datos, trimestral
+###bajar del INEGI la verdadera tasa de desocupación
+####importar en R y comparar
+Tasade<-sample(3:8, 44, replace= T)
+Tasade
+TD<-ts(Tasade, frequency = 4, start=(2005))
+layout(1:4)
+plot(TD, ylab="tasa de desocupación", xlab="Años en trimestre", main= "tasa de desocupación simulada por trimestre")
+plot(aggregate(TD), ylab="tasa de desocupación", xlab="Años en trimestre", main= "tasa de desocupación por trimestre")
+TasadeReal<-ts(read.csv(("C:\\Users\\SALA-C3\\Desktop\\desocu.csv"), header=F), frequency=4, start=(2005))
+plot(TasadeReal,ylab="tasa de desocupación", xlab="Años en trimestre", main= "tasa de desocupación real por trimestre" )
+plot(aggregate(TasadeReal), ylab="tasa de desocupación", xlab="Años en trimestre", main= "tasa de desocupación real por trimestre")
