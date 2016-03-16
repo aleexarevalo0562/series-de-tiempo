@@ -1,0 +1,48 @@
+###Alejandro arévalo pérez
+#### Generar 4 objetos con datos aleatorios y que tengan 60 datos
+### dato 1 de n?mero de profesionista (mill)rango de 5 a 8
+### dato 2 crec pib rango de 0 a 5
+### dato 3 porcentaje de ocupados rango de 40 a 60
+### dato 4 porcentaje de desocupados rango de 3 a 8
+#### 1) una vez que generen los datos hacer un data frame de los 4 objetos
+#### 2) mostrar en consola los primeros 12 y ultimos 12 datos
+#### 3) convertir los objetos en series de tiempo desde el data frame comezando en 2010 y son datos mensuales
+#### 4) graficar los profesionistas y ocupados en la misma imagen
+#### 5) graficar pib y desocupados en la misma imagen
+#### 6) graficar todas juntas
+### 7) creaR serie de tiempo multiple!!!!8
+#### 8 ) graficar serie de tiempo multiple 
+#### 9 ) dividir serie de tiempo y graficar solo el ultimo año...
+#### 8 ) analizar las graficas ( si hay alguna tendencia o variacion estacional) (investigar)
+nprof<- sample(5:8,60, replace=T)
+cpib<-sample(0:5,60, replace=TRUE)
+pocu<-sample(40:60,60, replace=TRUE)
+pdes<-sample(3:8, 60, replace=TRUE)
+help("data.frame")
+todo<-data.frame(nprof,cpib,pocu, pdes)
+todo[1:12,seq(1:4)]
+todo[49:60, seq(1:4)]
+todo[c(1:12,49:60),seq(1:4)]##los primero 12 y ultimos 12
+help(ts)
+STiempo<-ts(todo, frequency=12, start=2010)
+nprofST<-ts(todo[,1], frequency=12, start=2010)
+cpibST<-ts(todo[,2], frequency=12, start=2010)
+pocuST<-ts(todo[,3], frequency=12, start=2010)
+pdesST<-ts(todo[,4], frequency=12, start=2010)
+layout(1:2)
+plot(nprofST,xlab="años 2010-2014", ylab="numero de profesionales", main="ST profesionales ")
+plot(pocuST,xlab="años 2010-2014", ylab=" %ocupados", main="ST porcentaje de ocupados")
+layout(1:2)
+plot(cpibST,xlab="años 2010-2014", ylab="Δ del PIB", main="STΔPIB")
+plot(pdesST,xlab="años 2010-2014", ylab="% de desocupados", main="ST Porcentaje de Descupados")
+layout(1:4)
+plot(nprofST,xlab="años 2010-2014", ylab="numero de profesionales", main="ST profesionales ")
+plot(pocuST,xlab="años 2010-2014", ylab=" %ocupados", main="ST porcentaje de ocupados")
+plot(cpibST,xlab="años 2010-2014", ylab="Δ del PIB", main="STΔPIB")
+plot(pdesST,xlab="años 2010-2014", ylab="% de desocupados", main="ST Porcentaje de Descupados")
+seriemultip<-ts.intersect(nprofST, cpibST, pocuST, pdesST)
+plot(seriemultip, main="serie multiple: incremento del PIB, Desocupados, profersionales, poblacion ocupada", xlab="años", col="blue")
+seriepartida<-window(seriemultip, start=2014)
+plot(seriepartida, col="salmon")
+plot(aggregate(seriemultip))
+#######No hay ninguna variación estacional ###Datos aleatorios :#
