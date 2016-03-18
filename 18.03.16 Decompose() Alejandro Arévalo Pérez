@@ -1,0 +1,10 @@
+pdes<-sample(3:8, 60, replace=TRUE)
+tdesoc<-ts(pdes, frequency=12, start = 2010)
+tdesoc.de<-decompose(tdesoc)####por default es el modelo aditivo
+names(tdesoc.de)### trend= tendencia(Mt), seasonal=efecto estacional(St) random=error(Zt)
+plot(tdesoc.de, col="salmon", xlab="años", ylab="tasa desocupacion")
+Trend<-tdesoc.de$trend
+Season<-tdesoc.de$seasonal
+Trend
+tdesoc.dem<-decompose(tdesoc, type = "mult")###le pedimos a R que arroje el modelo multiplicativo
+plot(tdesoc.dem, col="salmon", xlab="años")
