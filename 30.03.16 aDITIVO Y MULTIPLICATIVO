@@ -1,0 +1,52 @@
+##ALEJANDRO ARÉVALO PÉREZ
+###30/03/16
+ICA<-ts(read.csv(("C://Users//SALA-C3//Desktop//ica acciones.csv"), header=T), frequency=252, start=2000)
+ICA
+icaadi<-decompose(ICA)##R arroja el modelo aditivo.
+icaadi
+View(ICA)
+#graficar
+plot(icaadi)
+icaadim<-decompose(ICA, type="mult")##modelo multiplicativo
+plot(icaadim)
+Tendencia<-icaadi$trend
+Estacionalidad<-icaadi$seasonal
+Aleatoriedad<-icaadi$random
+tabla<-data.frame(Tendencia,Estacionalidad, Aleatoriedad)
+tabla
+View(tabla)
+plot(Aleatoriedad)
+Tendenciam<-icaadim$trend
+Estacionalidadm<-icaadim$seasonal
+Aleatoriedadm<-icaadim$random
+names(icaadi)
+names(icaadim)
+icaadi$type
+icaadim$type
+icaadi$trend
+ts.plot(cbind(Tendencia, Tendencia*Estacionalidad), lty=1:2, col=c(1,8))
+####EJERCICIO###
+AM<-ts(read.csv(("C://Users//SALA-C3//Desktop//America movil.csv"), header=T), frequency=252, start=2000)
+AMadi<-decompose(AM)##R arroja el modelo aditivo.
+AMmul<-decompose(AM, type="mult")#Rarroja el modelo multiplicativo
+#graficar
+plot(AMadi)
+plot(AMmul)
+TendAd<-AMadi$trend
+EstaAd<-AMadi$seasonal
+AleaAd<-AMadi$random
+TendMul<-AMmul$trend
+EstaMul<-AMmul$seasonal
+AleaMul<-AMmul$random
+tsaTabla<-data.frame(TendAd,EstaAd,AleaAd)
+require(XLConnect)####para excel
+tsa<-loadWorkbook("tenestaleadi2.xls", create=TRUE)
+createSheet(tsa,name="Maditivo")
+createName(tsa, name="Maditivo", formula="Maditivo!$A$1")
+writeWorksheet(tsa,tsaTabla, "Maditivo")
+createSheet(tsa,name="Mmultiplicativo")
+createName(tsa, name="Mmultiplicativo", formula="Mmultiplicativo!$A$1")
+writeWorksheet(tsa,tsaTabla, "Mmultiplicativo")
+saveWorkbook(tsa)
+ts.plot(cbind(TendAd, TendAd*EstaAd), lty=1:2, col=c(1,8))
+ts.plot(cbind(TendMul, TendMul*EstaMul), lty=1:2, col=c(1,54))
