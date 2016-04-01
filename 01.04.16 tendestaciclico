@@ -1,0 +1,45 @@
+##Alejandro arévalo Pérez
+#### una vez que logramos descomponer la st en diversos los elementos de estacionalidad 
+#y tendencia hay que desestacionalizar la st y eliminar la tendencia ######
+
+#### EXISTE TENDENCIA CUANDO existe un patron en los datos  a largo plaza ya sea 
+### que aumenta o disminuye los datos 
+##### la estacionalidad existe cuando 
+### la ST cuando es influenciado por factores estacionales (por ejemplo, la
+###trimestre del año , el mes , o el día de la semana).
+### existen componente de ciclicoso en los datos cuando 
+##se detectan  incrementos y caídas que no son de tiempo determinado
+##(duración por lo general de al menos 2 años ).
+
+###3 DE estos 3 elemenos normalmente existen confusiones para detectarlos entre 
+### la estacionalidad y el componente ciclico
+###Principales diferencias entre estos dos componentes 
+# 1( patrón estacional longitud constante ; patrón cíclico Longitud variable
+# 2(  duración media del componente ciclico  más largo que la longitud del patrón estacional)
+#3) magnitud de ciclico más variable que magnitud del patrón estacional
+#4)  El momento de picos y caidas es predecible con los datos estacionales 
+#, pero impredecible a largo plazo con datos cíclicos .
+install.packages("fpp")
+require (fpp)
+plot(window(elec,start=1980),ylab="GWh",xlab="Year",main="Australian electricity production")
+##ESTA, TENDENCIA Y  no hay componente CICLICO
+plot(bricksq,ylab="million units",xlab="Year",main="Australian clay brick production")
+###ESTA Y CICLO NO MUCHO TENDENCIOA
+plot(hsales,main="Sales of new one-family houses, USA",ylab="Total sales",xlab="Year")
+#NO ESTA NI TENDENCIA, POSIBLE CICLO
+###############3EJEMPLOS GRAFICAS DETECTAR TENDENCIA, ESTACIONALIDAD Y CICLO
+ICA<-read.csv("C://Users//SALA-C3//Desktop//ica compl.csv", header=T)
+ICAst<-ts(ICA[,5], start=2000, frequency = 12)
+INB<-read.csv("C://Users//SALA-C3//Desktop//inbursa.csv", header=T)
+INBst<-ts(INB[,5], start=2000, frequency=12)
+CMex<-read.csv("C://Users//SALA-C3//Desktop//cmex.csv", header=T)
+Cmexst<-ts(CMex[,5], start=2000, frequency=12)
+layout(1:3)
+plot(ICAst, main="valor acciones ICA", ylab="valor al cierre")
+plot(INBst, main="valor acciones Inbursa", ylab="valor al cierre")
+plot(Cmexst, main="valor acciones CEMEX", ylab="valor al cierre")
+
+#Para las acciones de ICA podemos idedntificar dos diferentes cambios abruptos (cambios ciclicos) el primero de la crisis del 2008 y una tendencia de 2000 a 2005
+#para las acciones de Inbursapodemos ver cambios ciclicos del 2000 al 2002 y de 2010 al 2011 y de 2002  al 2011 prensenta una tendencia constante
+#Para las acciones de CEMEX no muiestra tendencia ni estacionalidad y si cambios ciclicos.
+#Cómo inversionista invertiria en las acciones de CEMEX por la baja volatilidad de los precios 
