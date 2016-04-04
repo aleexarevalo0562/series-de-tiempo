@@ -1,0 +1,68 @@
+#Alejandro Arévalo Pérez
+install.packages("fpp")
+require(fpp)
+help(fpp)
+seasonplot(ICATS,s=12,year.labels=T, main="Valor accion ICA",ylab="valor cierre",col=rainbow(20),
+           year.labels.left=T)
+
+monthplot(ICATS, ylab="Valor accion",xlab="month",main="valor acciones ICA")
+
+########### funciones utilizadas
+#ST graficas
+#plot or plot.ts
+#Grafica de temporalidad 
+#seasonplot
+#graficas de subseries temporales 
+#monthplot
+
+#######CORRELACION Y COVARIANZA
+#Covarianza y correlación : medida del grado
+#relación lineal entre dos variables (y Y x).
+
+############ covarianza 
+#ejercicio en r verifiquen que la formula de la covarianza
+#y la  correlacion den el mismo resultado que las funciones cov(x,y) y corr(x,y)
+#y la vovarianza es medida de asociacion entre dos variables
+#Cov(x,y)=Cov(x,y)/sd(x)sd(y)
+###Cov(x,y)=suma((xi-x(media))(yi-y(media)))/(n-1)
+
+icamed<-mean(ICATS)
+cemexmed<-mean(CEMEXTS)
+sd.ica<-sd(ICATS)
+sd.ica
+sd.cemex<-sd(CEMEXTS)
+sd.cemex
+cov.ica.cemex=cov(ICATS,CEMEXTS)
+cov.ica.cemex
+corr.ica.cemex<-(cov.ica.cemex)/(sd.cemex*sd.ica)
+corr.ica.cemex
+correlacion<-cor(ICATS,CEMEXTS)
+correlacion
+
+#EJERCICIO
+#1)
+seasonplot(ICATS,s=12,year.labels=T, main="Valor accion ICA",ylab="valor cierre",col=rainbow(20),year.labels.left=T)
+#Seleccione el año 2000, 2007 y 2006 y observamos tendencia y ciclico
+seasonplot(CEMEXTS,s=12,year.labels=T, main="Valor accion CEMEX",ylab="valor cierre",col=rainbow(20), year.labels.left=T)
+#Seleccione el año 2004, 2005 y 2006 y los tres tienen tendencia negativa en el mes de mayo
+seasonplot(INBUTS,s=12,year.labels=T, main="Valor accion INBURSA",ylab="valor cierre",col=rainbow(20),year.labels.left=T)
+#Seleccione 2000, 2010, 2011, en los primeros dos hay tendencia negativa y en el 2011 es positiva.
+
+#2)
+#CODIGO MANUAL.
+#ICA=X, CEMEX=Y, INBURSA=Z
+icamed<-mean(ICATS)
+cemexmed<-mean(CEMEXTS)
+inbumed<-mean(INBUTS)
+sd.ica<-sd(ICATS)
+sd.cemex<-sd(CEMEXTS)
+sd.inbu<-sd(INBUTS)
+#ICA-CEMEX
+corrxy<-(cov(ICATS,CEMEXTS))/(sd.ica*sd.cemex)
+corrxyR<-cor(ICATS,CEMEXTS)
+#ICA-INBURSA
+corrxz<-(cov(ICATS,INBUTS)/(sd.ica*sd.inbu))
+corrxzR<-cor(ICATS,INBUTS)
+#CEMEX-INBURSA
+corryz<-(cov(CEMEXTS,INBUTS)/(sd.cemex*sd.inbu))
+corryzR<-cor(CEMEXTS,INBUTS)
