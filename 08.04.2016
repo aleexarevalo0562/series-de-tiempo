@@ -1,0 +1,13 @@
+require(fpp)
+install.packages("fpp")
+Acf(beer)
+xx<-Acf(beer,main="ACF of quarterly beer production")
+names(xx)
+xx$acf
+##si todos lo valores caen dentro del rango, nuestra serie no tiene estacionalidad ni fecuencia.
+
+nflix<-read.csv("C:\\Users\\SALA-C2.RTIC-C2-HP\\Desktop\\netflix.csv")
+nflixts<-ts(nflix[,5],start=2015, frequency=12)
+plot.ts(nflixts)
+xx<-Acf(nflixts)
+xx$acf
