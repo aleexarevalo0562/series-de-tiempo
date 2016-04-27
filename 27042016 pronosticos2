@@ -1,0 +1,36 @@
+#alejandro Arevalo Perez
+install.packages("foreign")
+require(foreign)
+require(foreign)
+PIB<-read.csv("C:\\Users\\SALA-C3\\Desktop\\Pib .csv", header = T, dec=",")
+stPib<-ts(PIB, start=1993, frequency = 4)
+plot(stPib)
+install.packages("fpp")
+require(fpp)
+Acf(stPib)
+View(PIB)
+help("read.csv")
+View(PIB)
+PIB
+plot(stPib)
+Pibpro<-meanf(stPib, 4)
+plot(Pibpro)
+Pibpro1<-naive(stPib, 4)##ingenuo
+plot(Pibpro1)
+Pibpro2<-snaive(stPib, 4)###sani
+plot(Pibpro2)
+Pibpro3<-rwf(stPib, 4, drift = T)##deriva
+plot(Pibpro3)
+plot(Pibpro, plot.conf= F, main="Proyección Proyección PIB")
+lines(Pibpro1$mean, col=2)
+lines(Pibpro2$mean, col=3)
+lines(Pibpro3$mean, col=4)
+evalmed<-accuracy(Pibpro)
+evaling<-accuracy(Pibpro1)
+evalsnai<-accuracy(Pibpro2)
+evalder<-accuracy(Pibpro3)
+help(accuracy)
+evalmed
+evaling
+evalsnai
+evalder
