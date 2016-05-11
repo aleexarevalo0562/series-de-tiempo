@@ -1,0 +1,41 @@
+##Alejandro Arévalo Pérez
+labo<-read.csv("C:\\Users\\SALA-C2.RTIC-C2-HP\\Desktop\\pib1.csv")
+
+
+cremex1961 <- ts(labo, start  = 1961, end=2015, frequency = 1)
+View(cremex1961)
+require (fpp)
+plot(cremex1961, main="Crecimiento de Mexico 1961-2015 ", 
+     ylab="Porcentaje", xlab="Años")
+res1 <- residuals(naive(cremex1961))
+res2 <- residuals(snaive(cremex1961))
+res3 <- residuals(rwf(cremex1961, 3, drift = T))
+
+
+plot(res2, main="residuals de ingenuo estacional", 
+     ylab="residuales", xlab="años")
+Acf(res2, main="ACF de residuales")
+hist(res2, nclass="FD", main="histograma residuales")
+
+plot(res3, main="residuals de deriva", 
+     ylab="residuales", xlab="años")
+Acf(res3, main="ACF de residuales")
+hist(res3, nclass="FD", main="histograma residuales")
+
+
+##INGENUO
+plot(res1, main="residuals de ingenuo ", 
+     ylab="residuales", xlab="años")
+Acf(res1, main="ACF de residuales")
+hist(res1, nclass="FD", main="histograma residuales")
+
+##MEDIA
+Acf (cremex1961)
+#meanf (deso, h)
+media <- meanf (cremex1961, 3)
+plot (media)
+summary(media)
+
+
+Box.test(res1,lag=10,fitdf=0)
+Box.test(res1,lag=10,fitdf=0,type="Lj")
