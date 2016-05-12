@@ -1,0 +1,43 @@
+#alejandro arévalo pérez
+require (forecast)
+require (fpp)
+
+loan<-read.csv("C:\\Users\\Alejandro\\Desktop\\base.csv")
+base1<-ts(loan[,1],start=2005,frequency=4)
+base2<-ts(loan[,2],start=2005,frequency=4)
+View(loan)
+####SERIE 1
+mod1<-ses(base1,alpha=0.1,initial="simple",h=4)
+mod2<-ses(base1,alpha=0.6,initial="simple",h=4)
+mod3<-ses(base1,alpha=.9,initial="simple",h=4)
+x11()
+plot(base1,main="Tasa de Participación",xlab="Años", ylab="Tasa")
+lines(fitted(mod1), col="blue", type="o")
+lines(fitted(mod2), col="red", type="o")
+lines(fitted(mod3), col="green", type="o")
+legend("topleft", lty = 1, col=c(1,"blue","red","green"), c("data", expression(alpha==.1),
+                                                            expression (alpha==.6),expression (alpha==.9)), pch=1)
+####SERIE 2
+mod11<-ses(base2,alpha=0.0001,initial="simple",h=4)
+mod22<-ses(base2,alpha=0.5,initial="simple",h=4)
+mod33<-ses(base2,alpha=.987,initial="simple",h=4)
+plot(base2,main="Tasa de Desocupación",xlab="Años", ylab="Tasa")
+lines(fitted(mod11), col="blue", type="o")
+lines(fitted(mod22), col="red", type="o")
+lines(fitted(mod33), col="green", type="o")
+legend("topleft", lty = 1, col=c(1,"blue","red","green"), c("data", expression(alpha==.1),
+                                                            expression (alpha==.6),expression (alpha==.9)), pch=1)
+
+#########CALCULOS BASE 1
+eval1<-accuracy(mod1)
+eval2<-accuracy(mod2)
+eval3<-accuracy(mod3)
+eval<-data.frame(eval1, eval2, eval3)
+eval
+
+#####BASE 2
+eval11<-accuracy(mod11)
+eval22<-accuracy(mod22)
+eval33<-accuracy(mod33)
+evals2<-data.frame(eval11, eval22, eval33)
+evals2
