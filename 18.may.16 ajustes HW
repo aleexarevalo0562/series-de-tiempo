@@ -1,0 +1,66 @@
+require (foreign)
+brasilpib<-read.csv("C:\\Users\\Alejandro\\Downloads\\pib brasil .csv")
+mexedu<-read.csv("C:\\Users\\Alejandro\\Downloads\\mexico educacion.csv")
+bpibts<- ts(brasilpib, start = 1990)
+mexeduts<-ts(mexedu, start = 1990)
+require(forecast)
+##AJUSTE 1 
+require(fpp)
+aju1bra<-holt(bpibts,alpha=0.3,beta=0.1,initial="simple",h=40)
+aju1mex<-holt(mexeduts,alpha=0.3,beta=0.1,initial="simple",h=40)
+
+##AJUSTE 2
+aju2bra<-holt(bpibts,alpha=0.3,beta=0.1,initial="simple",h=40,exponential=T)
+aju2mex<-holt(mexeduts,alpha=0.3,beta=0.1,initial="simple",h=40,exponential=T)
+
+
+#AJUSTE 3
+aju3bra<-holt(bpibts,alpha=0.3,beta=0.1, gamma=0.5,damped=T)
+aju3mex<-holt(mexeduts,alpha=0.3,beta=0.1,gamma=0.5,damped=T)
+
+#AJUSTE 4
+aju4bra<-holt(bpibts,alpha=0.3,beta=0.1, gamma=0.5,damped=T, exponential=T)
+aju4mex<-holt(mexeduts,alpha=0.3,beta=0.1,gamma=0.5,damped=T,exponential=T)
+help(hw)
+#Ajuste 5 
+aju5bra<-hw(bpibts,seasonal="additive")####no hay datos estacionarios
+aju5mex<-hw(mexeduts,seasonal="additive")####no hay datos estacionarios
+#Ajuste 5.1 
+aju5.1bra<-hw(bpibts,seasonal="multiplicative")####no hay datos estacionarios
+aju5.1mex<-hw(mexeduts,seasonal="multiplicative")####no hay datos estacionarios
+x11()
+plot(bpibts,plot.conf=FALSE, xlab="Año", main="pIB BRA A PRECIOS INTERNACIONALES", fcol="white", type="o")
+###graficamos los ajustes
+lines(fitted(aju1bra), col="blue", type="o")
+lines(fitted(aju2bra), col="red", type="o")
+lines(fitted(aju3bra), col="green", type="o")
+lines(fitted(aju4bra), col="pink", type="o")
+legend("topleft", lty = 1, col=c(1,"blue","red","green", "pink"), c("pibbra", expression("holt lineal"),
+                                                                    expression ("holt exponencial"),expression ("TAA"), expression("TMA")), pch=1)
+eval1<-accuracy (aju1bra)
+eval2<-accuracy (aju2bra)
+eval3<-accuracy (aju3bra)
+eval4<-accuracy (aju4bra)
+data<-data.frame(eval1,eval2,eval3,eval4)
+data
+####Educacion en mexico
+x11()
+plot(mexeduts, plot.conf=FALSE, xlab="Año", main="Educacion primaria en Mexico Inscritos", fcol="white", type="o")
+###graficamos los ajustes
+lines(fitted(aju1mex), col="blue", type="o")
+lines(fitted(aju2mex), col="red", type="o")
+lines(fitted(aju3mex), col="green", type="o")
+lines(fitted(aju4mex), col="pink", type="o")
+legend("topleft", lty = 1, col=c(1,"blue","red","green", "pink"), c("mexeduts", expression("holt lineal"),
+                                                                    expression ("holt exponencial"),expression ("TAA"), expression("TMA")), pch=1)
+eval1m<-accuracy (aju1mex)
+eval2m<-accuracy (aju2mex)
+eval3m<-accuracy (aju3mex)
+eval4m<-accuracy (aju4mex)
+datam<-data.frame(eval1m,eval2m,eval3m,eval4m)
+eval1
+eval2
+eval3
+eval4
+datam
+####Para la educación basica en México el modelo que mas se ajusta es el TMA
