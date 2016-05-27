@@ -1,0 +1,27 @@
+##Alejandro Arévalo Pérez 
+require (foreign)
+brasilpib<-read.csv("C:\\Users\\SALA-C3\\Documents\\pib brasil .csv")
+pibbrats<- ts(brasilpib, start  = 1990)
+
+require (fpp)
+mod1 <- auto.arima(pibbrats, seasonal=FALSE)
+mod1###es caminata aleatoria (0,2,1)
+mod2<-Arima(pibbrats, order=c(3,1,0))###autorregresivo
+mod3<-Arima(pibbrats, order= c(0,2,3))##caminata aleatoriA
+
+pro1<- forecast (mod1, h=4)
+pro2<- forecast (mod2, h=4)
+pro3<- forecast (mod3, h=4)
+
+fitted (pro1)
+fitted (pro2)
+fitted (pro3)
+
+plot(pibbrats, plot.conf=FALSE, ylab="PIB BRASIL",xlab="AÑO", main="", fcol="white", type="o", ylim=4)
+lines(fitted(pro1), col="red", type="o")
+lines(fitted(pro2), col="orange", type="o")
+lines(fitted(pro3), col="green", type="o")
+lines(pro1$mean, col="red", type="o")
+lines(pro2$mean, col="orange", type="o")
+lines(pro3$mean, col="green", type="o")
+legend("topleft",lty=1, col=c(1,"red","orange","green"), c("pibbrats", expression(mod1), expression(mod2), expression(mod3)),pch=1)
